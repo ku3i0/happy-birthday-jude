@@ -78,6 +78,26 @@ font-size:40px;
 cursor:pointer;
 user-select:none;
 }
+
+#slide1{
+position:relative;
+overflow:hidden;
+}
+#slide1::before{
+content:"";
+position:absolute;
+inset:0;
+background:
+linear-gradient(rgba(15,12,16,.55),rgba(15,12,16,.55)),
+url("cover.jpg");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+filter:blur(8px);
+transform:scale(1.08);
+z-index:-1;
+}
+
 </style>
 </head>
 <body>
@@ -90,7 +110,7 @@ user-select:none;
 <div class="card">
 <h1>happy birthday jude ❤️</h1>
 <p>a small gift from eyad</p>
-<button onclick="nextSlide()">open my letter</button>
+<button onclick="startSite()">open my letter</button>
 </div>
 </section>
 
@@ -133,6 +153,13 @@ user-select:none;
 </section>
 
 <script>
+
+function startSite(){
+const music=document.getElementById("music");
+music.play().catch(()=>{});
+nextSlide();
+}
+
 const slides=document.querySelectorAll(".slide");
 let currentSlide=0;
 
