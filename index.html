@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>happy birthday jude ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
 --bg:#0f0c10;
@@ -14,10 +15,11 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{
 background:var(--bg);
-color:var(--text);
-font-family:Arial,sans-serif;
+color:white;
+font-family:'Inter',sans-serif;
 overflow:hidden;
 }
+
 .slide{
 display:none;
 height:100vh;
@@ -27,63 +29,15 @@ align-items:center;
 flex-direction:column;
 text-align:center;
 }
-.slide.active{display:flex}
-.card{
-max-width:900px;
-padding:40px;
-border-radius:24px;
-background:var(--glass);
-backdrop-filter:blur(12px);
-border:1px solid rgba(255,255,255,.1);
-}
-h1,h2{color:var(--pink);margin-bottom:20px}
-button{
-padding:12px 28px;
-border:none;
-border-radius:999px;
-background:var(--pink);
-margin-top:20px;
-cursor:pointer;
-}
-.typewriter{
-font-size:1.1rem;
-line-height:1.8;
-min-height:120px;
-}
-.memory-container{
-display:flex;
-align-items:center;
-gap:20px;
-max-width:1100px;
-width:100%;
-}
-.memory-container img{
-max-width:800px;
-max-height:70vh;
-width:auto;
-height:auto;
-border-radius:20px;
-}
-.memory-caption{
-margin-top:15px;
-padding:20px;
-background:rgba(255,182,193,.15);
-backdrop-filter:blur(12px);
-border:1px solid rgba(255,182,193,.4);
-border-radius:20px;
-color:var(--pink);
-}
-.arrow{
-font-size:40px;
-cursor:pointer;
-user-select:none;
-}
 
-#slide1{
+.slide.active{display:flex;}
+
+.slide:not(#slide5):not(#slide6){
 position:relative;
 overflow:hidden;
 }
-#slide1::before{
+
+.slide:not(#slide5):not(#slide6)::before{
 content:"";
 position:absolute;
 inset:0;
@@ -98,11 +52,81 @@ transform:scale(1.08);
 z-index:-1;
 }
 
+.card{
+max-width:900px;
+padding:40px;
+border-radius:24px;
+background:var(--glass);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,.1);
+}
+
+h1,h2{
+font-family:'Cormorant Garamond',serif;
+color:var(--pink);
+margin-bottom:20px;
+}
+
+button{
+padding:14px 30px;
+border:none;
+border-radius:999px;
+background:var(--pink);
+font-family:'Inter',sans-serif;
+font-size:1rem;
+font-weight:500;
+letter-spacing:1px;
+margin-top:20px;
+cursor:pointer;
+}
+
+.typewriter{
+font-size:1.1rem;
+line-height:1.8;
+min-height:120px;
+}
+
+.memory-container{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:15px;
+width:100%;
+}
+
+.memory-container img{
+width:min(90vw,900px);
+height:auto;
+max-height:70vh;
+object-fit:contain;
+border-radius:20px;
+}
+
+.arrow{
+font-size:40px;
+cursor:pointer;
+user-select:none;
+}
+
+.memory-caption{
+margin-top:15px;
+padding:20px;
+background:rgba(255,182,193,.15);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,182,193,.4);
+border-radius:20px;
+color:#ffb6c1;
+}
+
+.ending h1{
+font-size:clamp(3rem,8vw,7rem);
+text-shadow:0 0 25px rgba(255,182,193,.5);
+}
 </style>
 </head>
 <body>
 
-<audio id="music" autoplay loop>
+<audio id="music" loop>
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
@@ -125,7 +149,7 @@ z-index:-1;
 <section class="slide" id="slide3">
 <div class="card">
 <h2>how i love u</h2>
-<p class="typewriter" data-text="i love u i really love u and im deeply in love with u literally every time i talk to u and every message i send reflects how much i love u."></p>
+<p class="typewriter" data-text="i love u i really love u and im deeply in love with u literally every time i talk to u and every message i send reflects how much i love u"></p>
 <button onclick="nextSlide()">next</button>
 </div>
 </section>
@@ -142,21 +166,24 @@ z-index:-1;
 <h2>our moments ❤️</h2>
 <div class="memory-container">
 <div class="arrow" onclick="prevPhoto()">❮</div>
-
 <div>
 <img id="memoryImage" src="photo1.jpg">
 <div id="memoryCaption" class="memory-caption">شوف كيف حنا كيوت</div>
+<button onclick="showEnding()">what is next?</button>
 </div>
-
 <div class="arrow" onclick="nextPhoto()">❯</div>
 </div>
 </section>
 
-<script>
+<section class="slide" id="slide6">
+<div class="ending">
+<h1>hbd i love u ❤️</h1>
+</div>
+</section>
 
+<script>
 function startSite(){
-const music=document.getElementById("music");
-music.play().catch(()=>{});
+document.getElementById("music").play().catch(()=>{});
 nextSlide();
 }
 
@@ -168,17 +195,17 @@ slides[currentSlide].classList.remove("active");
 currentSlide++;
 slides[currentSlide].classList.add("active");
 
-const target=slides[currentSlide].querySelector(".typewriter");
-if(target && !target.dataset.done){
-typeWriter(target);
-target.dataset.done="1";
+const t=slides[currentSlide].querySelector(".typewriter");
+if(t&&!t.dataset.done){
+typeWriter(t);
+t.dataset.done=1;
 }
 }
 
 function typeWriter(el){
-const text=el.dataset.text;
+let text=el.dataset.text;
 let i=0;
-el.innerHTML="";
+el.innerHTML='';
 (function write(){
 if(i<text.length){
 el.innerHTML+=text.charAt(i);
@@ -189,38 +216,32 @@ setTimeout(write,25);
 }
 
 const photos=[
-{img:"photo1.jpg",cap:"شوف كيف حنا كيوت"},
-{img:"photo2.jpg",cap:"احب سعودية"},
-{img:"photo3.jpg",cap:"شوف اول طقم لنا"},
-{img:"photo4.jpg",cap:"تناقضنا"},
-{img:"photo5.jpg",cap:"انا ايلون"},
-{img:"photo6.jpg",cap:"البوست حقنا"},
-{img:"photo7.jpg",cap:"شوف كيف لويال انا"},
-{img:"photo8.jpg",cap:"خهخهخهخهخ"},
-{img:"photo9.jpg",cap:"شوف كيف حابين بعض"},
-{img:"photo10.jpg",cap:"😒😒"}
+["photo1.jpg","شوف كيف حنا كيوت"],
+["photo2.jpg","احب سعودية"],
+["photo3.jpg","شوف اول طقم لنا"],
+["photo4.jpg","تناقضنا"],
+["photo5.jpg","انا ايلون"],
+["photo6.jpg","البوست حقنا"],
+["photo7.jpg","شوف كيف لويال انا"],
+["photo8.jpg","خهخهخهخهخ"],
+["photo9.jpg","شوف كيف حابين بعض"],
+["photo10.jpg","😒😒"]
 ];
 
-let photoIndex=0;
+let p=0;
 
 function updatePhoto(){
-document.getElementById("memoryImage").src=photos[photoIndex].img;
-document.getElementById("memoryCaption").innerText=photos[photoIndex].cap;
+document.getElementById("memoryImage").src=photos[p][0];
+document.getElementById("memoryCaption").innerText=photos[p][1];
 }
 
-function nextPhoto(){
-photoIndex=(photoIndex+1)%photos.length;
-updatePhoto();
-}
+function nextPhoto(){p=(p+1)%photos.length;updatePhoto();}
+function prevPhoto(){p=(p-1+photos.length)%photos.length;updatePhoto();}
 
-function prevPhoto(){
-photoIndex=(photoIndex-1+photos.length)%photos.length;
-updatePhoto();
+function showEnding(){
+document.getElementById("slide5").classList.remove("active");
+document.getElementById("slide6").classList.add("active");
 }
-
-window.addEventListener("load",()=>{
-document.getElementById("music").play().catch(()=>{});
-});
 </script>
 
 </body>
